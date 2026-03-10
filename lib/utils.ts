@@ -91,7 +91,7 @@ export function getAvailabilityLabel(
         },
     };
     return {
-        label: map[status]?.[locale] ?? status,
+        label: map[status]?.[(locale as "fr" | "en")] ?? status,
         color: map[status]?.color ?? "",
     };
 }

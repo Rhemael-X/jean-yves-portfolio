@@ -1,17 +1,8 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import dynamic from "next/dynamic";
 import { getProfile } from "@/lib/groqQueries";
+import ContactFormWrapper from "@/components/ContactFormWrapper";
 
-const ContactForm = dynamic(() => import("@/components/ContactForm"), {
-    ssr: false,
-    loading: () => (
-        <div
-            className="rounded-xl p-8 animate-pulse"
-            style={{ background: "var(--bg-card)", border: "1px solid var(--border)", minHeight: "400px" }}
-        />
-    ),
-});
 
 interface ContactPageProps {
     params: Promise<{ locale: string }>;
@@ -118,7 +109,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
                     {/* Right — form */}
                     <div className="lg:col-span-3">
                         <div className="card p-6 md:p-8">
-                            <ContactForm />
+                            <ContactFormWrapper />
                         </div>
                     </div>
                 </div>
