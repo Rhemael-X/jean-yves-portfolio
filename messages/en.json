@@ -1,0 +1,155 @@
+{
+    "nav": {
+        "home": "Home",
+        "profile": "Profile",
+        "projects": "Projects",
+        "skills": "Skills",
+        "experience": "Experience",
+        "certifications": "Certifications",
+        "education": "Education",
+        "contact": "Contact"
+    },
+    "hero": {
+        "greeting": "Hi, I'm",
+        "cta_cv": "Download CV",
+        "cta_contact": "Contact Me",
+        "cta_projects": "View Projects",
+        "scroll_down": "Scroll"
+    },
+    "sections": {
+        "featured_projects": "Featured Projects",
+        "featured_projects_subtitle": "My most significant cybersecurity achievements",
+        "all_projects": "View all projects",
+        "skills_overview": "Key Skills",
+        "skills_subtitle": "Technologies and domains mastered",
+        "all_skills": "All skills",
+        "career_timeline": "Career Timeline",
+        "timeline_subtitle": "Recent experiences and education",
+        "contact_cta": "Let's Connect",
+        "contact_subtitle": "Available for cybersecurity opportunities",
+        "contact_btn": "Send a message"
+    },
+    "profile": {
+        "title": "My Profile",
+        "download_cv": "Download CV",
+        "social_links": "Social Links",
+        "stats": "Statistics",
+        "projects_count": "Projects",
+        "technologies_count": "Technologies",
+        "skills_count": "Skills",
+        "years_exp": "Years of Experience"
+    },
+    "projects": {
+        "title": "My Projects",
+        "subtitle": "Projects in cybersecurity, CTF, and secure development",
+        "search_placeholder": "Search projects...",
+        "filter_tags": "Tags",
+        "filter_difficulty": "Difficulty",
+        "filter_context": "Context",
+        "filter_technology": "Technology",
+        "filter_clear": "Clear filters",
+        "no_results": "No projects found",
+        "no_results_subtitle": "Try adjusting your search criteria",
+        "difficulty_beginner": "Beginner",
+        "difficulty_intermediate": "Intermediate",
+        "difficulty_advanced": "Advanced",
+        "difficulty_research": "Research",
+        "context_formation": "Training",
+        "context_universite": "University",
+        "context_personnel": "Personal",
+        "status_completed": "Completed",
+        "status_in_progress": "In Progress",
+        "status_archived": "Archived",
+        "prev_project": "Previous project",
+        "next_project": "Next project",
+        "github": "View on GitHub",
+        "demo": "View Demo",
+        "documentation": "Documentation",
+        "back_to_projects": "Back to projects",
+        "technologies": "Technologies used",
+        "tags": "Tags"
+    },
+    "skills": {
+        "title": "Skills",
+        "subtitle": "Areas of expertise in cybersecurity",
+        "level_1": "Awareness",
+        "level_2": "Basic",
+        "level_3": "Intermediate",
+        "level_4": "Advanced",
+        "level_5": "Expert"
+    },
+    "experience": {
+        "title": "Work Experience",
+        "subtitle": "My professional journey in cybersecurity",
+        "present": "Present"
+    },
+    "education": {
+        "title": "Education",
+        "subtitle": "My academic background"
+    },
+    "certifications": {
+        "title": "Certifications",
+        "subtitle": "Certifications and accreditations obtained",
+        "verify": "Verify Certificate"
+    },
+    "contact": {
+        "title": "Get in Touch",
+        "subtitle": "Send me a message for any opportunity or question",
+        "name": "Full Name",
+        "email": "Email",
+        "message": "Message",
+        "name_placeholder": "Your name",
+        "email_placeholder": "your@email.com",
+        "message_placeholder": "Tell me how I can help you...",
+        "submit": "Send Message",
+        "sending": "Sending...",
+        "success_title": "Message sent!",
+        "success_msg": "Thank you for your message. I will get back to you as soon as possible.",
+        "error_title": "Error",
+        "error_msg": "Something went wrong. Please try again.",
+        "rate_limit": "Too many messages. Please try again in an hour.",
+        "validation": {
+            "name_required": "Name is required",
+            "name_min": "Name must be at least 2 characters",
+            "email_required": "Email is required",
+            "email_invalid": "Invalid email",
+            "message_required": "Message is required",
+            "message_min": "Message must be at least 10 characters",
+            "message_max": "Message cannot exceed 2000 characters"
+        }
+    },
+    "common": {
+        "loading": "Loading...",
+        "error": "An error occurred",
+        "not_found": "Page not found",
+        "back_home": "Back to home",
+        "read_more": "Read more",
+        "close": "Close",
+        "open_menu": "Open menu",
+        "close_menu": "Close menu",
+        "toggle_theme": "Toggle theme",
+        "switch_language": "Switch language",
+        "page": "Page",
+        "of": "of",
+        "previous": "Previous",
+        "next": "Next"
+    },
+    "availability": {
+        "open-to-work": "Open to Work",
+        "freelance": "Freelance",
+        "research": "Research",
+        "not-available": "Not Available"
+    },
+    "seo": {
+        "home_title": "Jean-Yves — Cybersecurity Expert",
+        "home_description": "Portfolio of Jean-Yves, cybersecurity expert. Projects, skills, experience and certifications.",
+        "projects_title": "Projects — Jean-Yves",
+        "projects_description": "Discover my cybersecurity projects: CTF, pentest, forensics, secure development.",
+        "skills_title": "Skills — Jean-Yves",
+        "experience_title": "Experience — Jean-Yves",
+        "certifications_title": "Certifications — Jean-Yves",
+        "education_title": "Education — Jean-Yves",
+        "contact_title": "Contact — Jean-Yves",
+        "profile_title": "Profile — Jean-Yves"
+    }
+}

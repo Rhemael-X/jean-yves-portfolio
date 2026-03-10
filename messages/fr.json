@@ -1,0 +1,155 @@
+{
+    "nav": {
+        "home": "Accueil",
+        "profile": "Profil",
+        "projects": "Projets",
+        "skills": "Compétences",
+        "experience": "Expérience",
+        "certifications": "Certifications",
+        "education": "Formation",
+        "contact": "Contact"
+    },
+    "hero": {
+        "greeting": "Bonjour, je suis",
+        "cta_cv": "Télécharger mon CV",
+        "cta_contact": "Me contacter",
+        "cta_projects": "Voir mes projets",
+        "scroll_down": "Défiler"
+    },
+    "sections": {
+        "featured_projects": "Projets En Vedette",
+        "featured_projects_subtitle": "Mes réalisations les plus significatives en cybersécurité",
+        "all_projects": "Voir tous les projets",
+        "skills_overview": "Compétences Clés",
+        "skills_subtitle": "Technologies et domaines maîtrisés",
+        "all_skills": "Toutes les compétences",
+        "career_timeline": "Parcours Professionnel",
+        "timeline_subtitle": "Expériences et formations récentes",
+        "contact_cta": "Prenons Contact",
+        "contact_subtitle": "Disponible pour des opportunités en cybersécurité",
+        "contact_btn": "Envoyer un message"
+    },
+    "profile": {
+        "title": "Mon Profil",
+        "download_cv": "Télécharger le CV",
+        "social_links": "Liens sociaux",
+        "stats": "Statistiques",
+        "projects_count": "Projets",
+        "technologies_count": "Technologies",
+        "skills_count": "Compétences",
+        "years_exp": "Ans d'expérience"
+    },
+    "projects": {
+        "title": "Mes Projets",
+        "subtitle": "Projets en cybersécurité, CTF, et développement sécurisé",
+        "search_placeholder": "Rechercher un projet...",
+        "filter_tags": "Tags",
+        "filter_difficulty": "Difficulté",
+        "filter_context": "Contexte",
+        "filter_technology": "Technologie",
+        "filter_clear": "Effacer les filtres",
+        "no_results": "Aucun projet trouvé",
+        "no_results_subtitle": "Essayez de modifier vos critères de recherche",
+        "difficulty_beginner": "Débutant",
+        "difficulty_intermediate": "Intermédiaire",
+        "difficulty_advanced": "Avancé",
+        "difficulty_research": "Recherche",
+        "context_formation": "Formation",
+        "context_universite": "Université",
+        "context_personnel": "Personnel",
+        "status_completed": "Terminé",
+        "status_in_progress": "En cours",
+        "status_archived": "Archivé",
+        "prev_project": "Projet précédent",
+        "next_project": "Projet suivant",
+        "github": "Voir sur GitHub",
+        "demo": "Voir la démo",
+        "documentation": "Documentation",
+        "back_to_projects": "Retour aux projets",
+        "technologies": "Technologies utilisées",
+        "tags": "Tags"
+    },
+    "skills": {
+        "title": "Compétences",
+        "subtitle": "Domaines de maîtrise en cybersécurité",
+        "level_1": "Notions",
+        "level_2": "Basique",
+        "level_3": "Intermédiaire",
+        "level_4": "Avancé",
+        "level_5": "Expert"
+    },
+    "experience": {
+        "title": "Expérience Professionnelle",
+        "subtitle": "Mon parcours professionnel en cybersécurité",
+        "present": "Présent"
+    },
+    "education": {
+        "title": "Formation",
+        "subtitle": "Mon parcours académique"
+    },
+    "certifications": {
+        "title": "Certifications",
+        "subtitle": "Certifications et accréditations obtenus",
+        "verify": "Vérifier le certificat"
+    },
+    "contact": {
+        "title": "Contactez-moi",
+        "subtitle": "Envoyez-moi un message pour toute opportunité ou question",
+        "name": "Nom complet",
+        "email": "Email",
+        "message": "Message",
+        "name_placeholder": "Votre nom",
+        "email_placeholder": "votre@email.com",
+        "message_placeholder": "Dites-moi en quoi je peux vous aider...",
+        "submit": "Envoyer",
+        "sending": "Envoi en cours...",
+        "success_title": "Message envoyé !",
+        "success_msg": "Merci pour votre message. Je vous répondrai dans les plus brefs délais.",
+        "error_title": "Erreur",
+        "error_msg": "Une erreur est survenue. Veuillez réessayer.",
+        "rate_limit": "Trop de messages. Veuillez réessayer dans une heure.",
+        "validation": {
+            "name_required": "Le nom est requis",
+            "name_min": "Le nom doit contenir au moins 2 caractères",
+            "email_required": "L'email est requis",
+            "email_invalid": "Email invalide",
+            "message_required": "Le message est requis",
+            "message_min": "Le message doit contenir au moins 10 caractères",
+            "message_max": "Le message ne peut pas dépasser 2000 caractères"
+        }
+    },
+    "common": {
+        "loading": "Chargement...",
+        "error": "Une erreur est survenue",
+        "not_found": "Page non trouvée",
+        "back_home": "Retour à l'accueil",
+        "read_more": "En savoir plus",
+        "close": "Fermer",
+        "open_menu": "Ouvrir le menu",
+        "close_menu": "Fermer le menu",
+        "toggle_theme": "Changer le thème",
+        "switch_language": "Changer la langue",
+        "page": "Page",
+        "of": "sur",
+        "previous": "Précédent",
+        "next": "Suivant"
+    },
+    "availability": {
+        "open-to-work": "Disponible",
+        "freelance": "Freelance",
+        "research": "Recherche",
+        "not-available": "Non disponible"
+    },
+    "seo": {
+        "home_title": "Jean-Yves — Expert Cybersécurité",
+        "home_description": "Portfolio de Jean-Yves, expert en cybersécurité. Projets, compétences, expériences et certifications.",
+        "projects_title": "Projets — Jean-Yves",
+        "projects_description": "Découvrez mes projets en cybersécurité : CTF, pentest, forensics, développement sécurisé.",
+        "skills_title": "Compétences — Jean-Yves",
+        "experience_title": "Expérience — Jean-Yves",
+        "certifications_title": "Certifications — Jean-Yves",
+        "education_title": "Formation — Jean-Yves",
+        "contact_title": "Contact — Jean-Yves",
+        "profile_title": "Profil — Jean-Yves"
+    }
+}
