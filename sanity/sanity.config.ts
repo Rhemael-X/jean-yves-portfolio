@@ -27,7 +27,14 @@ export default defineConfig({
                 S.list()
                     .title("Content")
                     .items([
-                        S.singleton("profile", "👤 Profile", "profile"),
+                        S.listItem()
+                            .title("👤 Profile")
+                            .id("profile") // Unique ID for the list item
+                            .child(
+                                S.document()
+                                    .schemaType("profile") // The name of your schema type
+                                    .documentId("profile") // The fixed ID for this single document
+                            ),
                         S.divider(),
                         S.documentTypeListItem("project").title("🔒 Projects"),
                         S.divider(),
