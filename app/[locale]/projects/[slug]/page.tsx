@@ -6,7 +6,7 @@ import { notFound } from "next/navigation";
 import { getProjectBySlug, getAdjacentProjects, getAllProjectSlugs } from "@/lib/groqQueries";
 import { buildSanityImageUrl, formatDate, getDifficultyLabel, getContextLabel } from "@/lib/utils";
 import PortableTextRenderer from "@/components/PortableTextRenderer";
-import { AlternateLinksProvider } from "@/contexts/AlternateLinksContext";
+import RegisterAlternateLinks from "@/components/RegisterAlternateLinks";
 
 export const revalidate = 60;
 
@@ -99,7 +99,8 @@ export default async function ProjectDetailPage({ params }: ProjectDetailProps) 
     }
 
     return (
-        <AlternateLinksProvider links={alternateLinks}>
+        <>
+        <RegisterAlternateLinks links={alternateLinks} />
         <article className="pt-24 pb-20">
             <div className="container-main max-w-4xl">
                 {/* Back link */}
@@ -238,6 +239,6 @@ export default async function ProjectDetailPage({ params }: ProjectDetailProps) 
                 )}
             </div>
         </article>
-        </AlternateLinksProvider>
+        </>
     );
 }
