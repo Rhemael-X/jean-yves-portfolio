@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { useAlternateLinks } from "@/contexts/AlternateLinksContext";
 
 interface LanguageSwitcherProps {
     locale: string;
@@ -11,9 +12,15 @@ interface LanguageSwitcherProps {
 export default function LanguageSwitcher({ locale }: LanguageSwitcherProps) {
     const pathname = usePathname();
     const t = useTranslations("common");
+    const alternateLinks = useAlternateLinks();
 
     function switchLocale(newLocale: string) {
-        // Replace the current locale prefix in the pathname
+        // If the page provided translated URLs (e.g. project detail with localised slugs),
+        // use them directly instead of a naive locale prefix swap.
+        if (alternateLinks?.[newLocale]) {
+            return alternateLinks[newLocale];
+        }
+        // Default: replace the locale segment in the current pathname
         const segments = pathname.split("/");
         segments[1] = newLocale;
         return segments.join("/");
