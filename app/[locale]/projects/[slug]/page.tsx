@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { getProjectBySlug, getAdjacentProjects, getAllProjectSlugs } from "@/lib/groqQueries";
 import { buildSanityImageUrl, formatDate, getDifficultyLabel, getContextLabel } from "@/lib/utils";
 import PortableTextRenderer from "@/components/PortableTextRenderer";
+import { AlternateLinksProvider } from "@/contexts/AlternateLinksContext";
 
 export const revalidate = 60;
 
@@ -50,8 +51,36 @@ export default async function ProjectDetailPage({ params }: ProjectDetailProps) 
     const { locale, slug } = await params;
     const t = await getTranslations({ locale, namespace: "projects" });
 
-    const project = await getProjectBySlug(locale, slug);
-    if (!project) notFound();
+    let project;
+    try {
+        project = await getProjectBySlug(locale, slug);
+    } catch (err) {
+        console.error(`[project/${slug}] ❌ Failed to fetch project from Sanity:`, err);
+        console.error(`[project/${slug}] 👉 Check NEXT_PUBLIC_SANITY_PROJECT_ID and NEXT_PUBLIC_SANITY_DATASET env vars.`);
+        // Show a user-friendly error instead of a raw 500
+        return (
+            <div className="pt-32 pb-20 text-center container-main max-w-xl">
+                <p className="text-5xl mb-6">⚠️</p>
+                <h1 className="text-2xl font-bold mb-3" style={{ color: "var(--text-primary)" }}>
+                    {t("fetch_error_title")}
+                </h1>
+                <p className="mb-8" style={{ color: "var(--text-muted)" }}>
+                    {t("fetch_error_msg")}
+                </p>
+                <Link href={`/${locale}/projects`} className="btn-outline">
+                    ← {t("back_to_projects")}
+                </Link>
+            </div>
+        );
+    }
+
+    if (!project) {
+        console.warn(
+            `[project/${slug}] ⚠️ No project found for slug "${slug}" (locale: ${locale}).`,
+            `\n👉 Make sure the slug in Sanity is structured as { fr: { current: "..." }, en: { current: "..." } }.`
+        );
+        notFound();
+    }
 
     const adjacent = await getAdjacentProjects(project.order, locale).catch(() => ({ prev: null, next: null }));
 
@@ -60,7 +89,17 @@ export default async function ProjectDetailPage({ params }: ProjectDetailProps) 
     const content = project.content?.[locale] ?? project.content?.fr;
     const heroImageUrl = project.mainImage?.imageUrl ? buildSanityImageUrl(project.mainImage, 1200, 630) : null;
 
+    // Build translated URLs so the language switcher navigates to the correct slug
+    const alternateLinks: Record<string, string> = {};
+    for (const lang of ["fr", "en"]) {
+        const localizedSlug = project.slug?.[lang]?.current;
+        if (localizedSlug) {
+            alternateLinks[lang] = `/${lang}/projects/${localizedSlug}`;
+        }
+    }
+
     return (
+        <AlternateLinksProvider links={alternateLinks}>
         <article className="pt-24 pb-20">
             <div className="container-main max-w-4xl">
                 {/* Back link */}
@@ -199,5 +238,6 @@ export default async function ProjectDetailPage({ params }: ProjectDetailProps) 
                 )}
             </div>
         </article>
+        </AlternateLinksProvider>
     );
 }
