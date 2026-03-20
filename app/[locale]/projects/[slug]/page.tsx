@@ -98,6 +98,9 @@ export default async function ProjectDetailPage({ params }: ProjectDetailProps) 
         }
     }
 
+    // Debug: log the slugs found — visible in Vercel logs
+    console.log(`[project/${slug}] alternateLinks:`, JSON.stringify(alternateLinks));
+
     return (
         <>
         <RegisterAlternateLinks links={alternateLinks} />
