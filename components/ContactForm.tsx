@@ -13,7 +13,7 @@ const contactSchema = z.object({
 type ContactFormData = z.infer<typeof contactSchema>;
 type FieldErrors = Partial<Record<keyof ContactFormData, string>>;
 
-type FormState = "idle" | "submitting" | "success" | "error" | "rate_limited";
+type FormState = "idle" | "submitting" | "success" | "error" | "rate_limited" | "server_misconfigured" | "email_failed";
 
 export default function ContactForm() {
     const t = useTranslations("contact");
@@ -60,10 +60,24 @@ export default function ContactForm() {
                 setFormState("rate_limited");
                 return;
             }
+
             if (!res.ok) {
-                setFormState("error");
+                // Read the error code from the API for a precise message
+                try {
+                    const data = await res.json();
+                    if (data?.error === "server_misconfigured") {
+                        setFormState("server_misconfigured");
+                    } else if (data?.error === "email_failed") {
+                        setFormState("email_failed");
+                    } else {
+                        setFormState("error");
+                    }
+                } catch {
+                    setFormState("error");
+                }
                 return;
             }
+
             setFormState("success");
             setValues({ name: "", email: "", message: "", _gotcha: "" });
         } catch {
@@ -203,6 +217,18 @@ export default function ContactForm() {
             {formState === "rate_limited" && (
                 <div className="p-3 rounded-lg text-sm" style={{ background: "rgba(251,146,60,0.1)", color: "#fb923c", border: "1px solid rgba(251,146,60,0.3)" }}>
                     {t("rate_limit")}
+                </div>
+            )}
+            {formState === "server_misconfigured" && (
+                <div className="p-3 rounded-lg text-sm space-y-1" style={{ background: "rgba(248,113,113,0.1)", color: "#f87171", border: "1px solid rgba(248,113,113,0.3)" }}>
+                    <p className="font-semibold">{t("error_config_title")}</p>
+                    <p>{t("error_config_msg")}</p>
+                </div>
+            )}
+            {formState === "email_failed" && (
+                <div className="p-3 rounded-lg text-sm space-y-1" style={{ background: "rgba(251,146,60,0.1)", color: "#fb923c", border: "1px solid rgba(251,146,60,0.3)" }}>
+                    <p className="font-semibold">{t("error_email_title")}</p>
+                    <p>{t("error_email_msg")}</p>
                 </div>
             )}
 
