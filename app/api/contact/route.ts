@@ -15,6 +15,14 @@ function checkEnvVars() {
     if (!process.env.SANITY_API_TOKEN) warnings.push("SANITY_API_TOKEN (messages won't be saved to Sanity)");
     if (!process.env.CONTACT_RECIPIENT_EMAIL && !process.env.NEXT_PUBLIC_CONTACT_EMAIL) {
         warnings.push("CONTACT_RECIPIENT_EMAIL (emails will be sent to contact@example.com)");
+    } else {
+        // Remind about Resend free plan restriction
+        const recipient = process.env.CONTACT_RECIPIENT_EMAIL || process.env.NEXT_PUBLIC_CONTACT_EMAIL;
+        console.info(
+            `[contact] 📧 Emails will be sent to: ${recipient}. ` +
+            `⚠️  Resend free plan: recipient must be your verified Resend email. ` +
+            `To send to any address, verify a domain at resend.com/domains.`
+        );
     }
 
     if (missing.length > 0) {
