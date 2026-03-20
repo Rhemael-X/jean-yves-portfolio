@@ -5,6 +5,29 @@ import { Redis } from "@upstash/redis";
 import { writeClient } from "@/lib/sanityClient";
 import { sendContactEmail } from "@/lib/email";
 
+// Check required environment variables at startup and log clearly
+function checkEnvVars() {
+    const missing: string[] = [];
+    const warnings: string[] = [];
+
+    if (!process.env.RESEND_API_KEY) missing.push("RESEND_API_KEY");
+    if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) missing.push("NEXT_PUBLIC_SANITY_PROJECT_ID");
+    if (!process.env.SANITY_API_TOKEN) warnings.push("SANITY_API_TOKEN (messages won't be saved to Sanity)");
+    if (!process.env.CONTACT_RECIPIENT_EMAIL && !process.env.NEXT_PUBLIC_CONTACT_EMAIL) {
+        warnings.push("CONTACT_RECIPIENT_EMAIL (emails will be sent to contact@example.com)");
+    }
+
+    if (missing.length > 0) {
+        console.error("[contact] ❌ Missing required environment variables:", missing.join(", "));
+        console.error("[contact] 👉 Add them in Vercel → Settings → Environment Variables, then redeploy.");
+    }
+    if (warnings.length > 0) {
+        console.warn("[contact] ⚠️ Optional env vars not set:", warnings.join(", "));
+    }
+
+    return missing;
+}
+
 const contactSchema = z.object({
     name: z.string().min(2).max(100),
     email: z.string().email().max(254),
@@ -28,34 +51,46 @@ function getRatelimit() {
 
 export async function POST(request: Request) {
     try {
-        // Parse body
+        // 0. Check environment variables first
+        const missingVars = checkEnvVars();
+        if (missingVars.length > 0) {
+            return NextResponse.json(
+                {
+                    error: "server_misconfigured",
+                    detail: `Missing environment variables: ${missingVars.join(", ")}. Add them in Vercel → Settings → Environment Variables and redeploy.`,
+                },
+                { status: 503 }
+            );
+        }
+
+        // 1. Parse body
         let body: unknown;
         try {
             body = await request.json();
         } catch {
             return NextResponse.json(
-                { error: "Invalid JSON body" },
+                { error: "invalid_json", detail: "The request body is not valid JSON." },
                 { status: 400 }
             );
         }
 
-        // 1. Validate
+        // 2. Validate fields
         const result = contactSchema.safeParse(body);
         if (!result.success) {
             return NextResponse.json(
-                { error: "Validation failed", issues: result.error.flatten().fieldErrors },
+                { error: "validation_failed", issues: result.error.flatten().fieldErrors },
                 { status: 422 }
             );
         }
 
         const { name, email, message, _gotcha } = result.data;
 
-        // 2. Honeypot — silent pass if filled
+        // 3. Honeypot — silent pass if filled (bot trap)
         if (_gotcha && _gotcha.length > 0) {
             return NextResponse.json({ success: true });
         }
 
-        // 3. Rate limiting
+        // 4. Rate limiting
         const rl = getRatelimit();
         if (rl) {
             const ip =
@@ -67,7 +102,7 @@ export async function POST(request: Request) {
 
             if (!success) {
                 return NextResponse.json(
-                    { error: "Too many requests. Please try again later." },
+                    { error: "rate_limited", detail: "Too many requests. Please try again later." },
                     {
                         status: 429,
                         headers: {
@@ -81,34 +116,54 @@ export async function POST(request: Request) {
             }
         }
 
-        // 4. Store in Sanity
-        try {
-            await writeClient.create({
-                _type: "contactMessage",
-                name,
-                email,
-                message,
-                createdAt: new Date().toISOString(),
-                read: false,
-            });
-        } catch (err) {
-            console.error("[contact] Sanity write error:", err);
-            // Non-fatal: attempt email anyway
+        // 5. Store in Sanity (non-fatal if token missing)
+        if (process.env.SANITY_API_TOKEN) {
+            try {
+                await writeClient.create({
+                    _type: "contactMessage",
+                    name,
+                    email,
+                    message,
+                    createdAt: new Date().toISOString(),
+                    read: false,
+                });
+            } catch (err) {
+                // Log clearly but don't block the email send
+                console.error("[contact] ⚠️ Sanity write failed (message not saved, but email will still be sent):", err);
+            }
+        } else {
+            console.warn("[contact] ⚠️ SANITY_API_TOKEN not set — message not saved to Sanity.");
         }
 
-        // 5. Send email
+        // 6. Send email via Resend
         const recipient =
             process.env.CONTACT_RECIPIENT_EMAIL ||
             process.env.NEXT_PUBLIC_CONTACT_EMAIL ||
             "contact@example.com";
 
-        await sendContactEmail({ name, email, message, to: recipient });
+        try {
+            await sendContactEmail({ name, email, message, to: recipient });
+        } catch (err: any) {
+            // Provide a specific error message for common Resend issues
+            const msg: string = err?.message ?? "";
+            if (msg.includes("API key")) {
+                console.error("[contact] ❌ Resend error: invalid or missing RESEND_API_KEY.");
+            } else if (msg.includes("domain")) {
+                console.error("[contact] ❌ Resend error: sender domain not verified. Go to resend.com → Domains.");
+            } else {
+                console.error("[contact] ❌ Resend error:", err);
+            }
+            return NextResponse.json(
+                { error: "email_failed", detail: "The email could not be sent. Check RESEND_API_KEY and your Resend domain." },
+                { status: 502 }
+            );
+        }
 
         return NextResponse.json({ success: true });
     } catch (err) {
-        console.error("[contact] Unhandled error:", err);
+        console.error("[contact] ❌ Unhandled error:", err);
         return NextResponse.json(
-            { error: "Internal server error" },
+            { error: "internal_error", detail: "An unexpected error occurred. Check server logs." },
             { status: 500 }
         );
     }
