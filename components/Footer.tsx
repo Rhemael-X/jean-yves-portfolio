@@ -90,7 +90,7 @@ export default function Footer({ locale }: FooterProps) {
                 >
                     <p>© {year} Jean-Yves. {locale === "fr" ? "Tous droits réservés." : "All rights reserved."}</p>
                     <p className="font-mono text-xs" style={{ color: "var(--accent-cyan)" }}>
-                        {"<"} Brou Yao Jean Yves {"/>"}
+                        {"#"} Cybersecurity life {"#"}
                     </p>
                 </div>
             </div>
